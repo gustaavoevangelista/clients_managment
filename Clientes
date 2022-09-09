@@ -1,0 +1,180 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+namespace Final_Project{
+    public class Clientes{
+
+        private string Ficheiro = @$"{Environment.CurrentDirectory}\stock.csv";
+
+        private List<Cliente> lista_clientes = new List<Cliente>();
+
+        internal Clientes(){}
+
+        internal int Contagem()
+        {
+            return lista_clientes.Count;
+        }
+
+        internal int Numero_Cliente(int i){
+            return lista_clientes[i].numero_cliente;
+        }
+        internal bool Estado_Cliente(){
+            return true;
+        }
+
+        internal bool Estado_Cliente (int i){
+            return lista_clientes[i].estado_cliente;
+        
+        }
+        internal string Nome(int i){
+            return lista_clientes[i].nome;
+        }
+        internal string Morada(int i){
+            return lista_clientes[i].morada;
+        }
+        internal string Codigo_Postal(int i){
+            return lista_clientes[i].codigo_postal;
+        }
+
+        internal string Localidade(int i){
+            return lista_clientes[i].localidade;
+        }
+        
+        internal int Telefone(int i){
+            return lista_clientes[i].telefone;
+        }
+        
+        internal string Email(int i){
+            return lista_clientes[i].email;
+        }
+        
+        internal string Contribuinte(int i){
+            return lista_clientes[i].contribuinte;
+        }
+        internal float Saldo_Disponivel(int i){
+            return lista_clientes[i].saldo_disponivel;
+        }
+        internal DateTime Validade_Saldo(int i){
+            return lista_clientes[i].validade_saldo;
+        }
+
+
+        public void MostrarClientes(){
+            Console.WriteLine("---------------Lista de Clientes ---------------");
+
+            foreach(Cliente cliente in lista_clientes){
+                if (cliente.estado_cliente == true){
+                    Console.WriteLine($"Número de Cliente......{Numero_Cliente}");
+                    Console.WriteLine($"Nome...................{Nome}");
+                    Console.WriteLine($"Morada.................{Morada}");
+                    Console.WriteLine($"Código Postal..........{Codigo_Postal}");
+                    Console.WriteLine($"Localidade.............{Localidade}");
+                    Console.WriteLine($"Telefone...............{Telefone}");
+                    Console.WriteLine($"Email..................{Email}");
+                    Console.WriteLine($"Nº Contriuinte.........{Contribuinte}");
+                    Console.WriteLine($"Saldo Disponível.......{Saldo_Disponivel}");
+                    Console.WriteLine($"Data de Validade.......{Validade_Saldo}");
+                }
+            }
+        }
+
+        internal void Adiciona(int Inumero_cliente, bool Bestado_cliente, string Snome, string Smorada, string Scodigo_postal, string Slocalidade, int Itelefone, string Semail, string Scontribuinte, float Fsaldo_disponivel, DateTime Dvalidade_saldo){
+            
+            lista_clientes.Add(new Cliente()
+            {
+                numero_cliente = Inumero_cliente,
+                estado_cliente = Bestado_cliente,
+                nome = Snome,
+                morada = Smorada,
+                codigo_postal = Scodigo_postal,
+                localidade = Slocalidade,
+                telefone = Itelefone,
+                email = Semail,
+                contribuinte = Scontribuinte,
+                saldo_disponivel = Fsaldo_disponivel,
+                validade_saldo = Dvalidade_saldo
+
+            });
+        }
+
+        internal bool Inicializa(){
+            try
+            {
+                // abre o ficheiro para leitura
+                StreamReader streamReader = new StreamReader(this.Ficheiro);
+                string Linha;
+
+                while ((Linha = streamReader.ReadLine()) != null)
+                {
+                    // Marca 01;Modelo 01;2001
+
+                    string[] tokens = Linha.Split(';');
+
+                    // tokens[0] = "Marca 01"
+                    // tokens[1] = "Modelo 01
+                    // tokens[2] = "2001"
+
+                    if (tokens.Length != 11)
+                    {
+                        Console.WriteLine($"A linha tem {tokens.Length} tokens, o que está errado! A linha será descartada...");
+                        continue;
+                    }
+
+                    string Snumero_cliente = tokens[0];
+                    string Sestado_cliente = tokens[1]; 
+                    string Snome = tokens[2]; 
+                    string Smorada = tokens[3]; 
+                    string Scodigo_postal = tokens[4]; 
+                    string Slocalidade = tokens[5];
+                    string Stelefone = tokens[6];
+                    string Semail = tokens[7];
+                    string Scontribuinte = tokens[8]; 
+                    string Ssaldo_disponivel = tokens[9]; 
+                    string Svalidade_saldo = tokens[10];
+
+                    if (!int.TryParse(Snumero_cliente, out int Inumero_cliente))
+                    {
+                        Console.WriteLine($"A linha tem o número de cliente com um formato incorrecto ({Snumero_cliente})! A linha será descartada...");
+                        continue;
+                    }
+                    if (!bool.TryParse(Sestado_cliente, out bool Bestado_cliente))
+                    {
+                        Console.WriteLine($"A linha tem o estado do cliente com um formato incorrecto ({Sestado_cliente})! A linha será descartada...");
+                        continue;
+                    }
+                    if (!int.TryParse(Stelefone, out int Itelefone))
+                    {
+                        Console.WriteLine($"A linha tem o telefone com um formato incorrecto ({Stelefone})! A linha será descartada...");
+                        continue;
+                    }
+                    if (!float.TryParse(Ssaldo_disponivel, out float Fsaldo_disponivel))
+                    {
+                        Console.WriteLine($"A linha tem o saldo disponível com um formato incorrecto ({Ssaldo_disponivel})! A linha será descartada...");
+                        continue;
+                    }
+                    if (!DateTime.TryParse(Svalidade_saldo, out DateTime Dvalidade_saldo))
+                    {
+                        Console.WriteLine($"A linha tem data do saldo com um formato incorrecto ({Svalidade_saldo})! A linha será descartada...");
+                        continue;
+                    }
+
+                    Adiciona(Inumero_cliente, Bestado_cliente, Snome, Smorada, Scodigo_postal, Slocalidade, Itelefone, Semail, Scontribuinte, Fsaldo_disponivel, Dvalidade_saldo);
+                }
+
+                streamReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+
+                return false;
+            }
+
+            return true;
+        }
+
+
+    }
+    
+}

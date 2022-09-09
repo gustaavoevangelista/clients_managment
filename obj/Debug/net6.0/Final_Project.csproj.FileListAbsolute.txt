@@ -1,0 +1,5 @@
+C:\Users\gusta\PROJETOS\C#\Final_Project\obj\Debug\net6.0\Final_Project.csproj.AssemblyReference.cache
+C:\Users\gusta\PROJETOS\C#\Final_Project\obj\Debug\net6.0\Final_Project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gusta\PROJETOS\C#\Final_Project\obj\Debug\net6.0\Final_Project.AssemblyInfoInputs.cache
+C:\Users\gusta\PROJETOS\C#\Final_Project\obj\Debug\net6.0\Final_Project.AssemblyInfo.cs
+C:\Users\gusta\PROJETOS\C#\Final_Project\obj\Debug\net6.0\Final_Project.csproj.CoreCompileInputs.cache
