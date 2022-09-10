@@ -3,7 +3,6 @@
 namespace Final_Project{
     internal class Program{
         static void Main(string[] args){
-            
             Clientes clientes = new Clientes();
            
             if (clientes.Inicializa())
@@ -26,7 +25,7 @@ namespace Final_Project{
                         Console.WriteLine("O programa vai encerrar... Adeus!");
                         break;
                     }
-                    // falta verficiar se o cliente está ativo
+
                     case "01":
                         {
                             int contagem = clientes.Contagem();
@@ -57,7 +56,9 @@ namespace Final_Project{
 
                     case "02":
                         {
-                            /* if (viaturas.Contagem() == 0)
+                            /* 
+                            ex 7.1
+                            if (viaturas.Contagem() == 0)
                             {
                                 Console.WriteLine("Não existem viaturas na coleção!");
                                 break;
@@ -95,12 +96,26 @@ namespace Final_Project{
                                     Console.WriteLine("A viatura não foi encontrada! Verifique o índice na coleção!");
                             } */
 
+                            //trabalho final começa aqui
+                            int contagem = clientes.Contagem();
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+
+                            clientes.ClienteAtivoSaldo();
+
+
                             break;
                         }
 
                     case "03":
                         {
-                            /* Console.Write(" > Introduza a marca da viatura: ");
+                            /* 
+                            ex 7.1
+                            Console.Write(" > Introduza a marca da viatura: ");
                             string sMarca = Console.ReadLine();
 
                             Console.Write(" > Introduza o modelo da viatura: ");
@@ -141,6 +156,18 @@ namespace Final_Project{
                                 Console.WriteLine("Impossível adicionar a viatura. Operação cancelada.");
                             }
  */
+
+                            //trabalho final começa aqui
+                            int contagem = clientes.Contagem();
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+
+                            clientes.ClienteAtivoSaldoExp();
+
                             break;
                         }
 
@@ -156,7 +183,17 @@ namespace Final_Project{
                             
                             
                             //trabalho final começa aqui
-                            clientes.MostrarClientes();
+                            int contagem = clientes.Contagem();
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+
+                            Console.WriteLine("Qual o número do cliente que deseja obter todos os dados?");
+                            int indice = int.Parse(Console.ReadLine());
+                            clientes.MostrarUmCliente(indice);
                         
                             break;
                         }
@@ -176,7 +213,7 @@ namespace Final_Project{
                             string Slocalidade = Console.ReadLine();
 
                             Console.Write(" > Introduza o telefone do cliente: ");
-                            string Itelefone = Console.ReadLine();
+                            string Stelefone = Console.ReadLine();
 
                             Console.Write(" > Introduza o email do cliente: ");
                             string Semail = Console.ReadLine();
@@ -184,39 +221,23 @@ namespace Final_Project{
                             Console.Write(" > Introduza o contribuinte do cliente: ");
                             string Scontribuinte = Console.ReadLine();
 
-                            Console.Write(" > Introduza saldo disponível do cliente: ");
-                            string Fsaldo_disponivel = Console.ReadLine();
-
-                            Console.Write(" > Introduza a data/hora de validade do saldo disponível: ");
-                            string Dvalidade_saldo = Console.ReadLine();
-
                             bool passed;
-                            int tentativas = 1;
-                            int iAno;
+                            int Itelefone;
 
                             do
                             {
-                                Console.Write(" > Introduza o ano da matrícula: ");
-                                string sAno = Console.ReadLine();
-
-                                passed = int.TryParse(sAno, out iAno);
-
+                                passed = int.TryParse(Stelefone, out Itelefone);
+                                
                                 if (!passed)
                                 {
-                                    if (++tentativas > 3)
-                                    {
-                                        Console.WriteLine("Formato do Ano errado! Número de tentativas excedido...");
-                                        break;
-                                    }
-
-                                    Console.WriteLine("Formato do Ano errado! Insira novamente...");
+                                    Console.WriteLine("Formato do telefone errado! Insira novamente...");
                                 }
                             }
                             while (!passed);
 
                             if (passed)
                             {
-/*                                 clientes.Adiciona(Snome, Smorada, Scodigo_postal, Slocalidade, Itelefone, Semail, Scontribuinte, Fsaldo_disponivel, Dvalidade_saldo); */
+                                clientes.Adiciona(Snome, Smorada, Scodigo_postal, Slocalidade, Itelefone, Semail, Scontribuinte);
 
                                 Console.WriteLine($"Cliente inserido na coleção com sucesso!");
                             }
@@ -229,6 +250,20 @@ namespace Final_Project{
 
                     case "06":
                         {
+                            //trabalho final começa aqui
+                            int contagem = clientes.Contagem();
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+
+                            Console.WriteLine("Qual o número do cliente que deseja eliminar?");
+                            int indice = int.Parse(Console.ReadLine());
+
+                            clientes.Elimina(indice);
+
                             break;
                         }
 

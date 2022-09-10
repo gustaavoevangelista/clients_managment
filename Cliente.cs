@@ -1,3 +1,5 @@
+using System;
+
 namespace Final_Project{
     internal class Cliente{
 /*         private int numero_cliente;

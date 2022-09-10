@@ -60,23 +60,73 @@ namespace Final_Project{
         }
 
 
-        public void MostrarClientes(){
+        public int SetIndex(){
+            if (lista_clientes.Count == 0)
+                return 1;
+            return lista_clientes.Count + 1;
+        }
+
+        public void ListarClientesAtivos (bool estado_cliente){
             Console.WriteLine("---------------Lista de Clientes ---------------");
 
             foreach(Cliente cliente in lista_clientes){
                 if (cliente.estado_cliente == true){
                     Console.WriteLine($"Número de Cliente......{Numero_Cliente}");
                     Console.WriteLine($"Nome...................{Nome}");
-                    Console.WriteLine($"Morada.................{Morada}");
-                    Console.WriteLine($"Código Postal..........{Codigo_Postal}");
-                    Console.WriteLine($"Localidade.............{Localidade}");
-                    Console.WriteLine($"Telefone...............{Telefone}");
-                    Console.WriteLine($"Email..................{Email}");
                     Console.WriteLine($"Nº Contriuinte.........{Contribuinte}");
                     Console.WriteLine($"Saldo Disponível.......{Saldo_Disponivel}");
-                    Console.WriteLine($"Data de Validade.......{Validade_Saldo}");
+                    Console.WriteLine("-------------------------------------------");
+
                 }
             }
+        }
+
+
+        public void ClienteAtivoSaldo(){
+            foreach(Cliente cliente in lista_clientes){
+                if (cliente.estado_cliente == true){    
+                    if (cliente.saldo_disponivel > 0){
+                        Console.WriteLine($"Número de Cliente......{Numero_Cliente}");
+                        Console.WriteLine($"Nome...................{Nome}");
+                        Console.WriteLine($"Saldo Disponível.......{Saldo_Disponivel}");
+                        Console.WriteLine($"Validade do Saldo......{Validade_Saldo}");
+                        Console.WriteLine("-------------------------------------------");
+                    }
+                }
+            }
+        }
+
+
+        public void ClienteAtivoSaldoExp(){
+            foreach(Cliente cliente in lista_clientes){
+                    if (cliente.estado_cliente == true){
+                        if (cliente.validade_saldo < DateTime.Now){
+                        Console.WriteLine($"Número de Cliente......{Numero_Cliente}");
+                        Console.WriteLine($"Nome...................{Nome}");
+                        Console.WriteLine($"Saldo Disponível.......{Saldo_Disponivel}");
+                        Console.WriteLine($"Validade do Saldo......{DateTime.Now - cliente.validade_saldo}");
+                        Console.WriteLine("-------------------------------------------");
+                    }
+                }
+            }
+        }
+
+        public void MostrarUmCliente(int i){
+            Cliente cliente = new Cliente();
+            //foreach(Cliente cliente in lista_clientes){
+            if (cliente.estado_cliente == true){
+                Console.WriteLine($"Número de Cliente......{i}");
+                Console.WriteLine($"Nome...................{Nome}");
+                Console.WriteLine($"Morada.................{Morada}");
+                Console.WriteLine($"Código Postal..........{Codigo_Postal}");
+                Console.WriteLine($"Localidade.............{Localidade}");
+                Console.WriteLine($"Telefone...............{Telefone}");
+                Console.WriteLine($"Email..................{Email}");
+                Console.WriteLine($"Nº Contriuinte.........{Contribuinte}");
+                Console.WriteLine($"Saldo Disponível.......{Saldo_Disponivel}");
+                Console.WriteLine($"Data de Validade.......{Validade_Saldo}");
+            }
+            //}
         }
 
         internal void Adiciona(int Inumero_cliente, bool Bestado_cliente, string Snome, string Smorada, string Scodigo_postal, string Slocalidade, int Itelefone, string Semail, string Scontribuinte, float Fsaldo_disponivel, DateTime Dvalidade_saldo){
@@ -96,6 +146,31 @@ namespace Final_Project{
                 validade_saldo = Dvalidade_saldo
 
             });
+        } 
+        internal void Adiciona(string Snome, string Smorada, string Scodigo_postal, string Slocalidade, int Itelefone, string Semail, string Scontribuinte){
+            
+            lista_clientes.Add(new Cliente()
+            {
+                numero_cliente = SetIndex(),
+                estado_cliente = true,
+                nome = Snome,
+                morada = Smorada,
+                codigo_postal = Scodigo_postal,
+                localidade = Slocalidade,
+                telefone = Itelefone,
+                email = Semail,
+                contribuinte = Scontribuinte,
+                saldo_disponivel = 0,
+                validade_saldo = DateTime.Now
+
+            });
+
+            //guardar dados do cliente no ficheiro
+        }
+
+
+        internal void Elimina(int i){
+            lista_clientes.RemoveAt(i);
         }
 
         internal bool Inicializa(){
@@ -173,6 +248,33 @@ namespace Final_Project{
 
             return true;
         }
+
+
+
+        //TEM QUE TERMINAR ESTA FUNÇÃO !!!!!!!!!!!!!!!!!!!!!!!!!!
+        /* public bool Grava()
+        {
+            try
+            {
+                // abre o ficheiro para escrita
+                // o conteúdo do ficheiro será substituído
+                StreamWriter streamWriter = new(this.Ficheiro, false);
+
+                lista_clientes.ForEach(cliente => {
+                    streamWriter.WriteLine($"{cliente.Marca}{this.Delimitadores}{viatura.Modelo}{this.Delimitadores}{viatura.Ano}");
+                });
+
+                streamWriter.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+
+                return false;
+            }
+
+            return true;
+        } */
 
 
     }
