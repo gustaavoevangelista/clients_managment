@@ -21,12 +21,12 @@ namespace Final_Project{
 
                 switch (OpcaoMenu)
                 {
-                    case "00":{
+                    case "0":{
                         Console.WriteLine("O programa vai encerrar... Adeus!");
                         break;
                     }
 
-                    case "01":
+                    case "1":
                         {
                             int contagem = clientes.Contagem();
 
@@ -54,7 +54,7 @@ namespace Final_Project{
                             break;
                         }
 
-                    case "02":
+                    case "2":
                         {
                             /* 
                             ex 7.1
@@ -111,7 +111,7 @@ namespace Final_Project{
                             break;
                         }
 
-                    case "03":
+                    case "3":
                         {
                             /* 
                             ex 7.1
@@ -171,7 +171,7 @@ namespace Final_Project{
                             break;
                         }
 
-                    case "04":
+                    case "4":
                         {
                             /* 
                             isso é do exercicio 7.1
@@ -198,7 +198,7 @@ namespace Final_Project{
                             break;
                         }
 
-                    case "05":
+                    case "5":
                         {
                             Console.Write(" > Introduza o nome do cliente: ");
                             string Snome = Console.ReadLine();
@@ -248,7 +248,7 @@ namespace Final_Project{
                             break;
                         }
 
-                    case "06":
+                    case "6":
                         {
                             //trabalho final começa aqui
                             int contagem = clientes.Contagem();
@@ -263,21 +263,124 @@ namespace Final_Project{
                             int indice = int.Parse(Console.ReadLine());
 
                             clientes.Elimina(indice);
+                            clientes.Grava();
 
                             break;
                         }
 
-                    case "07":
+                    case "7":
+                        {
+                            string option;
+                            
+                            int contagem = clientes.Contagem();
+
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+                            
+                            Console.WriteLine("Qual o número do cliente que deseja eliminar?");
+                            int indice = int.Parse(Console.ReadLine());
+
+                            clientes.MostrarUmCliente(indice);
+
+                            do
+                            {
+                                option = MenuAlteraCliente();
+
+                                switch(option){
+                                    case "0":{
+                                        Console.WriteLine("O programa irá voltar ao menu anterior...");
+                                        break;
+                                    }
+
+                                    case "1":{
+                                        clientes.ModificarEstado(indice);
+                                        clientes.Grava();
+                                        break;
+                                    }
+
+                                    case "2":{
+                                        Console.Write("Insira o novo nome: ");
+                                        string nome = Console.ReadLine();
+
+                                        clientes.ModificarNome(indice, nome);
+                                        clientes.Grava();
+                                        break;
+                                    }
+
+                                    case "3":{
+                                        Console.Write("Insira a nova morada: ");
+                                        string morada = Console.ReadLine();
+
+                                        clientes.ModificarNome(indice, morada);
+                                        clientes.Grava();
+                                        break;
+                                    }
+
+                                    case "4":{
+                                        Console.Write("Insira o novo código postal: ");
+                                        string codigo_postal = Console.ReadLine();
+
+                                        clientes.ModificarCodPostal(indice, codigo_postal);
+                                        clientes.Grava();
+                                        break;
+                                    }
+
+                                    case "5":{
+                                        Console.Write("Insira a nova localidade: ");
+                                        string localidade = Console.ReadLine();
+
+                                        clientes.ModificarLocalidade(indice, localidade);
+                                        clientes.Grava();
+                                        break;
+                                    }
+
+                                    case "6":{
+                                        Console.Write("Insira o novo telefone: ");
+                                        int telefone = int.Parse(Console.ReadLine());
+
+                                        clientes.ModificarTelefone(indice, telefone);
+                                        clientes.Grava();
+                                        break;
+                                    }
+
+                                    case "7":{
+                                        Console.Write("Insira o novo email: ");
+                                        string email = Console.ReadLine();
+
+                                        clientes.ModificarEmail(indice, email);
+                                        clientes.Grava();
+                                        break;
+                                    }
+
+                                    case "8":{
+                                        Console.Write("Insira o novo contribuinte: ");
+                                        string contribuinte = Console.ReadLine();
+
+                                        clientes.ModificarContribuinte(indice, contribuinte);
+                                        clientes.Grava();
+                                        break;
+                                    }
+
+                                    default:{
+                                        break;
+                                    }
+                                }
+                            } 
+                            while (!option.Equals("8"));
+
+                            break;
+                        }
+
+                    case "8":
                         {
                             break;
                         }
 
-                    case "08":
-                        {
-                            break;
-                        }
-
-                    case "09":
+                    case "9":
                         {
                             break;
                         }
@@ -300,7 +403,6 @@ namespace Final_Project{
             }
             while (!OpcaoMenu.Equals("11"));
 
-            //return 0;
         }
 
         private static string Menu(){
@@ -317,6 +419,23 @@ namespace Final_Project{
             Console.WriteLine("09 - Listar os consumos de um Cliente, indicando: Número de Cliente, Nome, Data/Hora do Movimento eValor do Movimento");
             Console.WriteLine("10 - Adicionar um consumo (viagem) de um cliente, indicando o valor gasto e a Data/Hora do Movimento");
             Console.WriteLine("11 - Adicionar um carregamento de um cliente, indicando o valor e a Data/Hora do Movimento");
+            Console.Write("\nInsira a sua opção: ");
+
+            string Opcao = Console.ReadLine();
+
+            return Opcao;
+        }
+        private static string MenuAlteraCliente(){
+            Console.WriteLine("---------- O que deseja alterar? -------------");
+            Console.WriteLine("0 - Voltar ao menu anterior");
+            Console.WriteLine("1 - Estado do cliente");
+            Console.WriteLine("2 - Nome");
+            Console.WriteLine("3 - Morada");
+            Console.WriteLine("4 - Código postal");
+            Console.WriteLine("5 - Localidade");
+            Console.WriteLine("6 - Telefone");
+            Console.WriteLine("7 - Email");
+            Console.WriteLine("8 - Contribuinte");
             Console.Write("\nInsira a sua opção: ");
 
             string Opcao = Console.ReadLine();
