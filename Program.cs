@@ -4,13 +4,14 @@ namespace Final_Project{
     internal class Program{
         static void Main(string[] args){
             Clientes clientes = new Clientes();
+            //Movimentos movimentos = new Movimentos();
            
-            if (clientes.Inicializa())
-                Console.WriteLine(" > Coleção de clientes inicializada! ");
+            if (clientes.InicializaClientes() && clientes.InicializaMovimentos())
+                Console.WriteLine(" > Coleção de clientes e movimentos inicializada! ");
             else
             {
-                Console.WriteLine(" > Erro ao inicializar a coleção de clientes");
-                //return -1;
+                Console.WriteLine(" > Erro ao inicializar a coleção de clientes e movimentos");
+
             }
 
             string OpcaoMenu;
@@ -263,7 +264,7 @@ namespace Final_Project{
                             int indice = int.Parse(Console.ReadLine());
 
                             clientes.Elimina(indice);
-                            clientes.Grava();
+                            clientes.GravaClientes();
 
                             break;
                         }
@@ -271,7 +272,7 @@ namespace Final_Project{
                     case "7":
                         {
                             string option;
-                            
+                            bool estado_cliente = true;
                             int contagem = clientes.Contagem();
 
 
@@ -280,8 +281,10 @@ namespace Final_Project{
                                 Console.WriteLine("Não existem clientes na coleção!");
                                 break;
                             }
+
+                            clientes.ListarClientesAtivos(estado_cliente);
                             
-                            Console.WriteLine("Qual o número do cliente que deseja eliminar?");
+                            Console.WriteLine("Qual o número do cliente que deseja alterar os dados?");
                             int indice = int.Parse(Console.ReadLine());
 
                             clientes.MostrarUmCliente(indice);
@@ -298,7 +301,7 @@ namespace Final_Project{
 
                                     case "1":{
                                         clientes.ModificarEstado(indice);
-                                        clientes.Grava();
+                                        clientes.GravaClientes();
                                         break;
                                     }
 
@@ -307,7 +310,7 @@ namespace Final_Project{
                                         string nome = Console.ReadLine();
 
                                         clientes.ModificarNome(indice, nome);
-                                        clientes.Grava();
+                                        clientes.GravaClientes();
                                         break;
                                     }
 
@@ -316,7 +319,7 @@ namespace Final_Project{
                                         string morada = Console.ReadLine();
 
                                         clientes.ModificarNome(indice, morada);
-                                        clientes.Grava();
+                                        clientes.GravaClientes();
                                         break;
                                     }
 
@@ -325,7 +328,7 @@ namespace Final_Project{
                                         string codigo_postal = Console.ReadLine();
 
                                         clientes.ModificarCodPostal(indice, codigo_postal);
-                                        clientes.Grava();
+                                        clientes.GravaClientes();
                                         break;
                                     }
 
@@ -334,7 +337,7 @@ namespace Final_Project{
                                         string localidade = Console.ReadLine();
 
                                         clientes.ModificarLocalidade(indice, localidade);
-                                        clientes.Grava();
+                                        clientes.GravaClientes();
                                         break;
                                     }
 
@@ -343,7 +346,7 @@ namespace Final_Project{
                                         int telefone = int.Parse(Console.ReadLine());
 
                                         clientes.ModificarTelefone(indice, telefone);
-                                        clientes.Grava();
+                                        clientes.GravaClientes();
                                         break;
                                     }
 
@@ -352,7 +355,7 @@ namespace Final_Project{
                                         string email = Console.ReadLine();
 
                                         clientes.ModificarEmail(indice, email);
-                                        clientes.Grava();
+                                        clientes.GravaClientes();
                                         break;
                                     }
 
@@ -361,7 +364,7 @@ namespace Final_Project{
                                         string contribuinte = Console.ReadLine();
 
                                         clientes.ModificarContribuinte(indice, contribuinte);
-                                        clientes.Grava();
+                                        clientes.GravaClientes();
                                         break;
                                     }
 
@@ -377,22 +380,106 @@ namespace Final_Project{
 
                     case "8":
                         {
+                            int contagem = clientes.Contagem();
+
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+                            
+                            Console.WriteLine("Qual o número do cliente que deseja listar os carregamentos?");
+                            int indice = int.Parse(Console.ReadLine());
+
+                            if (clientes.ContagemMov() == 0){
+                                Console.WriteLine("Não existem movimentos deste cliente.");
+                                break;
+                            }
+
+                            clientes.ListarCarregamentosAtivos(indice);
                             break;
                         }
 
                     case "9":
                         {
+                            int contagem = clientes.Contagem();
+
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+                            
+                            Console.WriteLine("Qual o número do cliente que deseja listar os consumos?");
+                            int indice = int.Parse(Console.ReadLine());
+
+                            if (clientes.ContagemMov() == 0){
+                                Console.WriteLine("Não existem movimentos deste cliente.");
+                                break;
+                            }
+
+                            clientes.ListarConsumosAtivos(indice);
                             break;
                         }
 
                     case "10":
                         {
+                            int contagem = clientes.Contagem();
+
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+                            
+                            Console.WriteLine("Qual o número do cliente que deseja listar os consumos?");
+                            int indice = int.Parse(Console.ReadLine());
+
+                            if (clientes.ContagemMov() == 0){
+                                Console.WriteLine("Não existem movimentos deste cliente.");
+                                break;
+                            }
+
+                            Console.WriteLine("Qual o valor do consumo do cliente?");
+                            float valor = float.Parse(Console.ReadLine());
+
+                            clientes.AdicionarConsumo(indice,valor);
                             break;
                         }
 
                     case "11":
                         {
+                            int contagem = clientes.Contagem();
+
+
+                            if (clientes.Contagem() == 0)
+                            {
+                                Console.WriteLine("Não existem clientes na coleção!");
+                                break;
+                            }
+                            
+                            Console.WriteLine("Qual o número do cliente que deseja listar os consumos?");
+                            int indice = int.Parse(Console.ReadLine());
+
+                            if (clientes.ContagemMov() == 0){
+                                Console.WriteLine("Não existem movimentos deste cliente.");
+                                break;
+                            }
+
+                            Console.WriteLine("Qual o valor do consumo do cliente?");
+                            float valor = float.Parse(Console.ReadLine());
+
+                            if(valor < 5){
+                                Console.WriteLine("O carregamento mínimo é de 5 euros.");
+                                continue;
+                            }
+
+                            clientes.AdicionarConsumo(indice,valor);
                             break;
+                            
                         }
 
                     default:

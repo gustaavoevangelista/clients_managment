@@ -6,10 +6,19 @@ namespace Final_Project{
     public class Clientes{
 
         private string Ficheiro = @$"{Environment.CurrentDirectory}\stock.csv";
+        private string Ficheiro_Mov = @$"{Environment.CurrentDirectory}\movimentos.csv";
+
+        private List<Movimento> lista_movimentos = new List<Movimento>();
+
 
         private List<Cliente> lista_clientes = new List<Cliente>();
 
         internal Clientes(){}
+
+        internal int ContagemMov()
+        {
+            return lista_movimentos.Count;
+        }
 
         internal int Contagem()
         {
@@ -165,7 +174,7 @@ namespace Final_Project{
 
             });
 
-            Grava();
+            GravaClientes();
         }
 
 
@@ -206,7 +215,56 @@ namespace Final_Project{
             lista_clientes[i].contribuinte = contribuinte;
         }
 
-        internal bool Inicializa(){
+
+        internal void ListarCarregamentosAtivos(int i){
+            foreach(Movimento movimento in lista_movimentos){
+                if (movimento.valor > 0){
+                    Console.WriteLine($"Número de Cliente......{Numero_Cliente}");
+                    Console.WriteLine($"Nome...................{Nome}");
+                    Console.WriteLine("Carregamentos: \n");
+                    Console.WriteLine($"\tData do movimento......{movimento.data_mov}");
+                    Console.WriteLine($"\tValor do movimento.....{movimento.valor}");
+                }
+            }
+        }
+        internal void ListarConsumosAtivos(int i){
+            foreach(Movimento movimento in lista_movimentos){
+                if (movimento.valor < 0){
+                    Console.WriteLine($"Número de Cliente......{Numero_Cliente}");
+                    Console.WriteLine($"Nome...................{Nome}");
+                    Console.WriteLine("Consumos: \n");
+                    Console.WriteLine($"\tData do movimento......{movimento.data_mov}");
+                    Console.WriteLine($"\tValor do movimento.....{movimento.valor}");
+                }
+            }
+        }
+
+
+        internal void AdicionarConsumo(int numero_cliente, float valor){
+            lista_movimentos.Add(new Movimento()
+            {
+                numero_cliente = numero_cliente,
+                valor = -valor,
+                data_mov = DateTime.Now
+
+            });
+
+            GravaMovimentos();
+        }
+
+        internal void AdicionarCarregamento(int numero_cliente, float valor){
+            lista_movimentos.Add(new Movimento()
+            {
+                numero_cliente = numero_cliente,
+                valor = valor,
+                data_mov = DateTime.Now
+
+            });
+
+            GravaMovimentos();
+        }
+
+        internal bool InicializaClientes(){
             try
             {
                 // abre o ficheiro para leitura
@@ -278,7 +336,7 @@ namespace Final_Project{
 
 
 
-        public bool Grava()
+        public bool GravaClientes()
         {
             try
             {
@@ -302,6 +360,68 @@ namespace Final_Project{
         } 
 
 
+        internal bool InicializaMovimentos(){
+            try
+            {
+                // abre o ficheiro para leitura
+                StreamReader streamReader = new StreamReader(this.Ficheiro_Mov);
+                string Linha;
+
+                while ((Linha = streamReader.ReadLine()) != null)
+                {
+                    string[] tokens = Linha.Split(';');
+
+                    if (tokens.Length != 3)
+                    {
+                        Console.WriteLine($"A linha tem {tokens.Length} tokens, o que está errado! A linha será descartada...");
+                        continue;
+                    }
+
+                    int numero_cliente = int.Parse(tokens[0]);
+                    DateTime data_mov = Convert.ToDateTime(tokens[1]); 
+                    float valor = float.Parse(tokens[2]); 
+
+
+                    Movimento novo_movimento = new Movimento(numero_cliente, data_mov, valor);
+                    lista_movimentos.Add(novo_movimento);
+                }
+
+                streamReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+
+                return false;
+            }
+
+            return true;
+        }
+
+
+
+        public bool GravaMovimentos()
+        {
+            try
+            {
+                // abre o ficheiro para escrita
+                // o conteúdo do ficheiro será substituído
+                StreamWriter streamWriter = new(this.Ficheiro_Mov, false);
+
+                lista_movimentos.ForEach(movimento => {
+                    streamWriter.WriteLine($"{movimento.numero_cliente};{movimento.data_mov};{movimento.valor};;");
+                });
+
+                streamWriter.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+
+                return false;
+            }
+            return true;
+        }
     }
     
 }

@@ -2,16 +2,6 @@ using System;
 
 namespace Final_Project{
     internal class Cliente{
-/*         private int numero_cliente;
-        private string nome;
-        private string morada;
-        private string codigo_postal;
-        private string localidade;
-        private int telefone;
-        private string email;
-        private string contribuinte;
-        private float saldo_disponivel;
-        private DateTime validade; */
 
         public int numero_cliente { set; get;}
         public bool estado_cliente {set; get; }
